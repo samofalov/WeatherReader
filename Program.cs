@@ -18,7 +18,7 @@ var dateTimeRange = new Range<DateTime>(loadFrom, loadTo);
 Console.WriteLine($"Loading weather data from {dateTimeRange.Minimum} to {dateTimeRange.Maximum}");
 
 // Read files
-var streamAccessorFactory = new PermanentStreamAccessorFactory();
+var streamAccessorFactory = new TransientStreamAccessorFactory();
 var interpolator = new NearestValidNeighbor<float>();
 
 var pbfDirectoryBasedFactory = new PbfWeatherDataIndexFactory(streamAccessorFactory, interpolator);
@@ -32,7 +32,7 @@ var metOceanDataProvider = new GriddedMetOceanDataProvider(weatherDataOnDisk, ne
 var position = new Position(35, 18);
 var dateTime = new DateTime(2022, 08, 31, 18, 0, 0);
 dateTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
-var metOceanDataParameters = MetOceanDataParameters.All;
+const MetOceanDataParameters metOceanDataParameters = MetOceanDataParameters.All;
 
 // Use provider to retrieve data
 var data = metOceanDataProvider.GetMetOceanData(position, dateTime, metOceanDataParameters);
